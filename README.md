@@ -87,30 +87,8 @@ Beautiful. Three boxes. One arrow.
 
 ### What I Actually Built
 
-```
-                         Users
-                           |
-                        HTTPS
-                           |
-                    Load Balancer
-                           |
-                      Ingress
-                           |
-                      n8n Web
-                       |     |
-                    Redis   Cloud SQL (PostgreSQL)
-                       |         |
-              +--------+---+     |
-              |            |     |
-          Worker 1    Worker 2   |
-              |            |     |
-              +------------+-----+
-              (all pods connect to Cloud SQL)
+<img width="520" height="735" alt="image" src="https://github.com/user-attachments/assets/8c274a75-4ad9-4d72-bddd-6bb20ffc955a" />
 
-    Private Nodes ----> Cloud NAT ----> Internet APIs
-```
-
-> 📸 **IMAGE SUGGESTION:** Create a clean architecture diagram showing these components. Tools like draw.io, Excalidraw, or Lucidchart work well for Medium. Export as PNG, keep it simple — boxes, arrows, labels.
 
 ### Component Summary
 
@@ -210,31 +188,8 @@ Private Cluster  ✕  Internet
 
 Not ideal when your workflows need to call Microsoft APIs, webhook endpoints, and package repositories.
 
-> 📸 **IMAGE SUGGESTION:** A simple before/after diagram. "Before Cloud NAT: cluster isolated." "After Cloud NAT: cluster can reach out without being reachable."
 
 ---
-
-## Cloud NAT — Letting Private Things Talk
-
-Cloud NAT solves the "private but not *too* private" problem. It allows private resources to initiate outbound connections without exposing themselves publicly.
-
-**My favorite analogy:** Cloud NAT lets your infrastructure browse the internet without telling the internet where it lives.
-
-### Setup
-
-```bash
-# Create a Cloud Router (required for NAT)
-gcloud compute routers create YOUR_NAT_ROUTER \
-  --network YOUR_VPC_NETWORK \
-  --region YOUR_REGION
-
-# Create the NAT gateway
-gcloud compute routers nats create YOUR_NAT_GATEWAY \
-  --router YOUR_NAT_ROUTER \
-  --region YOUR_REGION \
-  --auto-allocate-nat-external-ips \
-  --nat-all-subnet-ip-ranges
-```
 
 ### Verifying It Works
 
@@ -251,10 +206,9 @@ If both commands succeed, your private nodes can reach the outside world. Your w
 ### Troubleshooting Cloud NAT
 
 If outbound connections fail:
-1. Verify the NAT gateway exists and is attached to the correct router
-2. Verify the router is in the same region as your cluster
-3. Check firewall rules aren't blocking egress
-4. Verify DNS resolution works (sometimes it's just DNS)
+1. Verify the router is in the same region as your cluster
+2. Check firewall rules aren't blocking egress
+3. Verify DNS resolution works (sometimes it's just DNS)
 
 ---
 
@@ -471,9 +425,9 @@ If your cert is stuck in PROVISIONING:
 3. ✅ Backend pods are running and healthy
 4. ✅ Health check endpoint is responding (usually `/healthz` or `/`)
 5. ✅ Static IP is reserved and assigned
-6. ⏳ Wait. Sometimes it just takes 15-30 minutes.
+6. ⏳ Wait. Sometimes it just takes 5 minutes.
 
-> 📸 **IMAGE SUGGESTION:** A flowchart: "Cert stuck? → Check DNS → Check Ingress → Check Backend Health → Wait 30 min → Still stuck? Start over from DNS."
+<img width="368" height="643" alt="image" src="https://github.com/user-attachments/assets/846a6fb0-aacb-4b2c-80c6-9947d621b78d" />
 
 ---
 
@@ -524,7 +478,7 @@ The official n8n Docker image is great. But enterprise needs additions:
 - Python dependencies (for code nodes)
 - Task runner configuration
 
-### Repository Structure
+### Repository Structure should ideally look like:
 
 ```
 n8n-kubernetes-hosting/
