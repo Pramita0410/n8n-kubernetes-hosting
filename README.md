@@ -83,7 +83,19 @@ We chose **n8n** — an open-source, self-hosted workflow automation tool. The s
 Users → n8n
 ```
 
-Beautiful. Three boxes. One arrow.
+Clean. Simple. And as I quickly realized, nowhere near production-ready.
+
+Once enterprise requirements entered the picture, the questions started stacking up:
+
+- How do we secure access?
+- How do we scale workflow execution?
+- What happens if a node fails?
+- Where does workflow history live?
+- How do we handle TLS certificates?
+- How do we back everything up?
+- How do we recover after an outage?
+
+Each question added another component to the architecture. That simple two-box diagram grew into something significantly more involved.
 
 ### What I Actually Built
 
@@ -662,7 +674,7 @@ kubectl exec -it POD_NAME -n YOUR_NAMESPACE -- n8n import:workflow --input=/tmp/
 kubectl exec -it POD_NAME -n YOUR_NAMESPACE -- n8n import:credentials --input=/tmp/credentials.json
 ```
 
-> 📸 **IMAGE SUGGESTION:** A decision tree for disaster recovery. "What broke? → Pod → Do nothing. Deployment → Apply YAML. Namespace → Full recovery. Database → Restore from backup."
+<img width="765" height="229" alt="image" src="https://github.com/user-attachments/assets/0787017a-bdc5-4fe9-80c7-d7b1629b7c65" />
 
 ---
 
@@ -756,13 +768,13 @@ And that's a much more interesting problem to solve.
 
 *Thanks for reading. If this article helps you avoid even one TLS debugging session, I consider that a win.*
 
-*And if you're the person who inherited this platform — welcome. You're going to be fine. The architecture is solid, the backups are running, and now you have the docs.*
+*And if you're the person who inherited this platform - welcome. You're going to be fine. The architecture is solid, the backups are running, and now you have the docs.*
 
 ---
 
 > **About the Author**
->
-> Platform engineer focused on cloud infrastructure, automation, and making complex systems understandable. Built this platform from scratch on GCP using GKE, Cloud SQL, Redis, and more Kubernetes YAML than any one person should write.
+> 
+> Operations engineer who tries everything. Cloud infrastructure, automation, Kubernetes, and making complex systems work reliably in production.
 
 ---
 
