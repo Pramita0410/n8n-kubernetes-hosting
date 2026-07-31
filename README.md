@@ -39,27 +39,27 @@ And honestly, that's where the fun began.
 
 ## Table of Contents
 
-1. [What We Were Building (and Why)](#what-we-were-building)
-2. [The Architecture — From Napkin to Production](#the-architecture)
-3. [Why Kubernetes (GKE)](#why-kubernetes)
-4. [Private Networking — Security First](#private-networking)
-5. [Cloud NAT — Letting Private Things Talk](#cloud-nat)
-6. [PostgreSQL — Because Data Should Survive Restarts](#postgresql)
-7. [Redis — The Quiet Hero](#redis)
-8. [TLS / HTTPS — The Real Villain](#tls)
-9. [Helm — Future You Will Be Grateful](#helm)
-10. [The Container Image — Custom Builds](#container-image)
-11. [Backups — Confidence Is Not a Recovery Strategy](#backups)
+1. [What We Were Building (and Why)](#what-we-were-building-and-why)
+2. [The Architecture — From Napkin to Production](#the-architecture--from-napkin-to-production)
+3. [Why Kubernetes (GKE)](#why-kubernetes-gke)
+4. [Private Networking — Security First](#private-networking--security-first)
+5. [Cloud NAT — Letting Private Things Talk](#cloud-nat--letting-private-things-talk)
+6. [PostgreSQL — Because Data Should Survive Restarts](#postgresql--because-data-should-survive-restarts)
+7. [Redis — The Quiet Hero](#redis--the-quiet-hero)
+8. [TLS / HTTPS — The Real Villain](#tls--https--the-real-villain)
+9. [Helm — Future You Will Be Grateful](#helm--future-you-will-be-grateful)
+10. [The Container Image — Custom Builds](#the-container-image--custom-builds)
+11. [Backups — Confidence Is Not a Recovery Strategy](#backups--confidence-is-not-a-recovery-strategy)
 12. [Daily Operations](#daily-operations)
 13. [Disaster Recovery](#disaster-recovery)
-14. [Troubleshooting Playbook](#troubleshooting)
+14. [Troubleshooting Playbook](#troubleshooting-playbook)
 15. [Lessons Learned](#lessons-learned)
 16. [Final Thoughts](#final-thoughts)
 
 ---
 
 
-## What We Were Building (and Why) {#what-we-were-building}
+## What We Were Building (and Why)
 
 The organization needed a centralized workflow automation platform. Think of it as a control center where teams could:
 
@@ -75,7 +75,7 @@ We chose **n8n** — an open-source, self-hosted workflow automation tool. The s
 
 ---
 
-## The Architecture — From Napkin to Production {#the-architecture}
+## The Architecture — From Napkin to Production
 
 ### What I Drew on Day One
 
@@ -130,7 +130,7 @@ My original architecture had three boxes. My final architecture needed its own z
 
 ---
 
-## Why Kubernetes (GKE) {#why-kubernetes}
+## Why Kubernetes (GKE)
 
 Could I have deployed n8n on a single VM? Absolutely. Would it run? Probably. Would I want to operate it long-term?
 
@@ -188,7 +188,7 @@ kubectl get ingress -A
 
 ---
 
-## Private Networking — Security First {#private-networking}
+## Private Networking — Security First
 
 ### The Philosophy
 
@@ -214,7 +214,7 @@ Not ideal when your workflows need to call Microsoft APIs, webhook endpoints, an
 
 ---
 
-## Cloud NAT — Letting Private Things Talk {#cloud-nat}
+## Cloud NAT — Letting Private Things Talk
 
 Cloud NAT solves the "private but not *too* private" problem. It allows private resources to initiate outbound connections without exposing themselves publicly.
 
@@ -258,7 +258,7 @@ If outbound connections fail:
 
 ---
 
-## PostgreSQL — Because Data Should Survive Restarts {#postgresql}
+## PostgreSQL — Because Data Should Survive Restarts
 
 ### Why You Need an External Database
 
@@ -324,7 +324,7 @@ If this returns `succeeded`, your app can talk to the database.
 
 ---
 
-## Redis — The Quiet Hero {#redis}
+## Redis — The Quiet Hero
 
 ### Why Redis Matters
 
@@ -384,7 +384,7 @@ Redis is gloriously boring. And that's a compliment.
 
 ---
 
-## TLS / HTTPS — The Real Villain {#tls}
+## TLS / HTTPS — The Real Villain
 
 Every project needs an antagonist. For this project, it was TLS.
 
@@ -477,7 +477,7 @@ If your cert is stuck in PROVISIONING:
 
 ---
 
-## Helm — Future You Will Be Grateful {#helm}
+## Helm — Future You Will Be Grateful
 
 As the project grew, so did the Kubernetes YAML. Before long I had enough YAML files to publish a short novel.
 
@@ -513,7 +513,7 @@ Future me remains extremely grateful for this decision.
 
 ---
 
-## The Container Image — Custom Builds {#container-image}
+## The Container Image — Custom Builds
 
 ### Why Custom?
 
@@ -568,7 +568,7 @@ kubectl rollout restart deployment/n8n -n YOUR_NAMESPACE
 
 ---
 
-## Backups — Confidence Is Not a Recovery Strategy {#backups}
+## Backups — Confidence Is Not a Recovery Strategy
 
 If you don't have backups, you don't have a recovery plan. You have optimism.
 
@@ -612,7 +612,7 @@ The key principle: if your database disappears tomorrow, you should be able to r
 
 ---
 
-## Daily Operations {#daily-operations}
+## Daily Operations
 
 ### Morning Health Check (2 minutes)
 
@@ -648,7 +648,7 @@ kubectl logs deployment/n8n-worker -n YOUR_NAMESPACE --tail=100
 
 ---
 
-## Disaster Recovery {#disaster-recovery}
+## Disaster Recovery
 
 ### Scenario 1: A Pod Crashes
 
@@ -712,7 +712,7 @@ kubectl exec -it POD_NAME -n YOUR_NAMESPACE -- n8n import:credentials --input=/t
 
 ---
 
-## Troubleshooting Playbook {#troubleshooting}
+## Troubleshooting Playbook
 
 ### Quick Reference
 
@@ -737,7 +737,7 @@ kubectl exec -it POD_NAME -n YOUR_NAMESPACE -- n8n import:credentials --input=/t
 
 ---
 
-## Lessons Learned {#lessons-learned}
+## Lessons Learned
 
 After building this from scratch, here's what stuck:
 
@@ -763,7 +763,7 @@ After building this from scratch, here's what stuck:
 
 ---
 
-## Final Thoughts {#final-thoughts}
+## Final Thoughts
 
 When I started this project, I thought I was deploying n8n.
 
