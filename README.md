@@ -99,7 +99,7 @@ Each question added another component to the architecture. That simple two-box d
 
 ### What I Actually Built
 
-<img width="520" height="735" alt="image" src="https://github.com/user-attachments/assets/8c274a75-4ad9-4d72-bddd-6bb20ffc955a" />
+<img width="591" height="861" alt="image" src="https://github.com/user-attachments/assets/678e4dba-8a38-43eb-a92b-f3297fb480fa" />
 
 
 ### Component Summary
