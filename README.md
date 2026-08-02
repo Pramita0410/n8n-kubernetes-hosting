@@ -111,7 +111,7 @@ Each question added another component to the architecture. That simple two-box d
 | Queue | Redis (Memorystore) | Distributes workflow execution across workers |
 | Networking | Private Nodes + Cloud NAT | Keeps servers hidden, allows outbound calls |
 | Ingress | GCP HTTPS Load Balancer | Routes user traffic to the app |
-| TLS | GCP Managed Certificate | HTTPS encryption |
+| TLS | Internal Managed Certificate | HTTPS encryption |
 | Storage | Cloud Storage (GCS) | Backup storage |
 | Images | Artifact Registry | Custom Docker images |
 | Deployment | Helm | Manages Kubernetes deployments |
